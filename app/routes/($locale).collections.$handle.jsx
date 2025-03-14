@@ -1,5 +1,6 @@
 import {redirect} from '@shopify/remix-oxygen';
-import {useLoaderData, Link} from '@remix-run/react';
+import {useLoaderData} from '@remix-run/react';
+import {Link} from '@remix-run/react';
 import {
   getPaginationVariables,
   Image,
@@ -7,7 +8,7 @@ import {
   Analytics,
 } from '@shopify/hydrogen';
 import {useVariantUrl} from '~/lib/variants';
-import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
+import {ProductCard} from '~/components/ProductCard';
 
 /**
  * @type {MetaFunction<typeof loader>}
@@ -26,7 +27,11 @@ export async function loader(args) {
   // Await the critical data required to render initial state of the page
   const criticalData = await loadCriticalData(args);
 
-  return {...deferredData, ...criticalData};
+  // Make sure we're returning a plain object that can be serialized to JSON
+  return {
+    ...deferredData,
+    ...criticalData,
+  };
 }
 
 /**
@@ -81,26 +86,20 @@ export default function Collection() {
     <div className="collection">
       <h1>{collection.title}</h1>
       <p className="collection-description">{collection.description}</p>
-      <PaginatedResourceSection
-        connection={collection.products}
-        resourcesClassName="products-grid"
-      >
-        {({node: product, index}) => (
-          <ProductItem
-            key={product.id}
-            product={product}
-            loading={index < 8 ? 'eager' : undefined}
-          />
+      {/* Leave for debugging */}
+      {/* <pre style={{fontSize: '12px'}}>
+        {JSON.stringify(collection.products, null, 2)}
+      </pre>  */}
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {collection.products.nodes.length > 0 ? (
+          collection.products.nodes.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))
+        ) : (
+          <p>No products found in this collection.</p>
         )}
-      </PaginatedResourceSection>
-      <Analytics.CollectionView
-        data={{
-          collection: {
-            id: collection.id,
-            handle: collection.handle,
-          },
-        }}
-      />
+      </div>
     </div>
   );
 }
@@ -111,31 +110,6 @@ export default function Collection() {
  *   loading?: 'eager' | 'lazy';
  * }}
  */
-function ProductItem({product, loading}) {
-  const variantUrl = useVariantUrl(product.handle);
-  return (
-    <Link
-      className="product-item"
-      key={product.id}
-      prefetch="intent"
-      to={variantUrl}
-    >
-      {product.featuredImage && (
-        <Image
-          alt={product.featuredImage.altText || product.title}
-          aspectRatio="1/1"
-          data={product.featuredImage}
-          loading={loading}
-          sizes="(min-width: 45em) 400px, 100vw"
-        />
-      )}
-      <h4>{product.title}</h4>
-      <small>
-        <Money data={product.priceRange.minVariantPrice} />
-      </small>
-    </Link>
-  );
-}
 
 const PRODUCT_ITEM_FRAGMENT = `#graphql
   fragment MoneyProductItem on MoneyV2 {
