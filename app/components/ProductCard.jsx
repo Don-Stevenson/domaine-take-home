@@ -1,5 +1,4 @@
 import {useState} from 'react';
-import {Image} from '@shopify/hydrogen';
 import {
   useOptimisticVariant,
   getAdjacentAndFirstAvailableVariants,
@@ -13,9 +12,11 @@ import {
   ProductCardVendor,
 } from './typography/ProductCardFont';
 import {CustomColorSwatch} from './CustomColorSwatch';
+import {HoverImage} from './HoverImage';
 
 export function ProductCard({product}) {
   const [selectedColor, setSelectedColor] = useState(null);
+  const [isHovered, setIsHovered] = useState(false);
 
   // Selects a variant with given available variant information
   const selectedVariant = useOptimisticVariant(
@@ -60,25 +61,17 @@ export function ProductCard({product}) {
 
   return (
     <div className="flex flex-col gap-[0.938rem]">
-      {/* Product Image Section */}
       <div className="relative">
-        {isOnSale && (
-          <div className="absolute top-5 left-5">
-            <OnSaleBadge>On Sale!</OnSaleBadge>
-          </div>
-        )}
-
-        <div className="flex items-center justify-center border border-[#E8E8E8] pt-5 pb-5 rounded-xl p-5 max-w-[19.69rem]">
-          <div className="w-full overflow-hidden flex items-center justify-center">
-            {currentColorVariant?.image && (
-              <Image
-                data={currentColorVariant.image}
-                className="w-[17.19rem] h-auto"
-                alt={`${title} - ${currentColorVariant.title}`}
-              />
-            )}
-          </div>
-        </div>
+        <HoverImage
+          isHovered={isHovered}
+          currentColorVariant={currentColorVariant}
+          title={title}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+          isOnSale={isOnSale}
+          OnSaleBadge={OnSaleBadge}
+          hoverImagePositionClasses="top-0 -right-4"
+        />
       </div>
 
       <div className="flex flex-col">

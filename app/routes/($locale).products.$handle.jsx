@@ -74,11 +74,92 @@ export default function Product() {
   /** @type {LoaderReturnData} */
   const {product} = useLoaderData();
 
+  // Process the product data to make secondaryImage more accessible
+  const processedProduct = createEnhancedProduct(product);
+
   return (
     <div className="max-w-6xl flex flex-start px-4 py-8">
-      <ProductCard product={product} />
+      <ProductCard product={processedProduct} />
     </div>
   );
+}
+
+/**
+ * Creates an enhanced product with properly formatted secondaryImage
+ * @param {Object} product - The original product data
+ * @returns {Object} - The enhanced product with accessible secondaryImage
+ */
+function createEnhancedProduct(product) {
+  return {
+    ...product,
+    options: createEnhancedProductOptions(product.options),
+    selectedOrFirstAvailableVariant: createEnhancedVariant(
+      product.selectedOrFirstAvailableVariant,
+    ),
+    adjacentVariants: createEnhancedAdjacentVariants(product.adjacentVariants),
+  };
+}
+
+/**
+ * Creates enhanced product options with properly formatted secondaryImage
+ * @param {Array|undefined} options - The product options
+ * @returns {Array} - The enhanced product options
+ */
+function createEnhancedProductOptions(options) {
+  if (!options) return [];
+
+  return options.map((option) => ({
+    ...option,
+    optionValues: createEnhancedOptionValues(option.optionValues),
+  }));
+}
+
+/**
+ * Creates enhanced option values with properly formatted secondaryImage
+ * @param {Array|undefined} optionValues - The option values
+ * @returns {Array} - The enhanced option values
+ */
+function createEnhancedOptionValues(optionValues) {
+  if (!optionValues) return [];
+
+  return optionValues.map((value) => ({
+    ...value,
+    firstSelectableVariant: createEnhancedVariant(value.firstSelectableVariant),
+  }));
+}
+
+/**
+ * Creates an enhanced variant with properly formatted secondaryImage
+ * @param {Object|null} variant - The original variant
+ * @returns {Object|null} - The enhanced variant with accessible secondaryImage
+ */
+function createEnhancedVariant(variant) {
+  if (!variant) return null;
+
+  return {
+    ...variant,
+    secondaryImage: getAccessibleSecondaryImage(variant.secondaryImage),
+  };
+}
+
+/**
+ * Creates enhanced adjacent variants with properly formatted secondaryImage
+ * @param {Array|undefined} adjacentVariants - The adjacent variants
+ * @returns {Array} - The enhanced adjacent variants
+ */
+function createEnhancedAdjacentVariants(adjacentVariants) {
+  if (!adjacentVariants) return [];
+
+  return adjacentVariants.map((variant) => createEnhancedVariant(variant));
+}
+
+/**
+ * Gets the accessible image from a secondaryImage metafield reference
+ * @param {Object|null} secondaryImage - The secondaryImage metafield
+ * @returns {Object|null} - The accessible image or null
+ */
+function getAccessibleSecondaryImage(secondaryImage) {
+  return secondaryImage?.reference?.image || null;
 }
 
 const PRODUCT_VARIANT_FRAGMENT = `#graphql
@@ -96,6 +177,19 @@ const PRODUCT_VARIANT_FRAGMENT = `#graphql
       altText
       width
       height
+    }
+    secondaryImage: metafield(namespace: "custom", key: "secondary_image") {
+      reference {
+        ... on MediaImage {
+          id
+          image {
+            url
+            altText
+            width
+            height
+          }
+        }
+      }
     }
     price {
       amount
