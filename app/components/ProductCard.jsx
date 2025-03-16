@@ -12,6 +12,7 @@ import {
   ProductCardTitle,
   ProductCardVendor,
 } from './typography/ProductCardFont';
+import {CustomColorSwatch} from './CustomColorSwatch';
 
 export function ProductCard({product}) {
   const [selectedColor, setSelectedColor] = useState(null);
@@ -27,18 +28,16 @@ export function ProductCard({product}) {
 
   const {title, vendor} = product;
 
-  // Get color options
+  // Get color options from product options
   const colorOptions =
     product.options?.find((option) => option.name === 'Color')?.optionValues ||
     [];
 
-  // Find the currently selected color variant
   const currentColorVariant = selectedColor
     ? colorOptions.find((color) => color.name === selectedColor)
         ?.firstSelectableVariant
     : selectedVariant;
 
-  // Check if product is on sale
   const isOnSale = (() => {
     if (!currentColorVariant?.compareAtPrice || !currentColorVariant?.price) {
       return false;
@@ -63,7 +62,6 @@ export function ProductCard({product}) {
     <div className="flex flex-col gap-[0.938rem]">
       {/* Product Image Section */}
       <div className="relative">
-        {/* Sale badge */}
         {isOnSale && (
           <div className="absolute top-5 left-5">
             <OnSaleBadge>On Sale!</OnSaleBadge>
@@ -83,38 +81,17 @@ export function ProductCard({product}) {
         </div>
       </div>
 
-      {/* Product Details Section */}
       <div className="flex flex-col">
-        {/* Color options */}
-        <div className="flex flex-wrap gap-2 mb-[0.938rem] w-40">
-          {colorOptions.map((color) => {
-            const isSelected =
-              selectedColor === color.name ||
-              (!selectedColor &&
-                currentColorVariant?.selectedOptions[0]?.value === color.name);
-
-            return (
-              <button
-                key={color.name}
-                onClick={() => setSelectedColor(color.name)}
-                className={`relative w-[1.25rem] h-[1.25rem] rounded-full ${
-                  isSelected ? 'ring-1 ring-[#0A4874] ring-offset-1' : ''
-                }`}
-                style={{
-                  backgroundColor: getColorCode(color.name),
-                  backgroundImage: color.swatch?.image
-                    ? `url(${color.swatch.image.previewImage?.url})`
-                    : 'none',
-                }}
-                title={color.name}
-                aria-label={`Select ${color.name} color`}
-              />
-            );
-          })}
-        </div>
+        <CustomColorSwatch
+          colorOptions={colorOptions}
+          selectedColor={selectedColor}
+          setSelectedColor={setSelectedColor}
+          currentColorVariant={currentColorVariant}
+        />
+        {/* Product Details Section */}
         <div className="flex flex-col gap-[0.375rem]">
           {vendor && <ProductCardVendor>{vendor}</ProductCardVendor>}
-          <ProductCardTitle>{title}</ProductCardTitle>
+          {title && <ProductCardTitle>{title}</ProductCardTitle>}
           <div className="flex justify-start items-center gap-2">
             {isOnSale ? (
               <>
@@ -143,18 +120,4 @@ export function ProductCard({product}) {
       </div>
     </div>
   );
-}
-
-// Helper function to get color codes
-function getColorCode(colorName) {
-  const colorMap = {
-    Orange: '#FF6633',
-    Green: '#006600',
-    Blue: '#00639C',
-    Yellow: '#FCE78D',
-    Pink: '#FFCCFF',
-    Navy: '#19264B',
-  };
-
-  return colorMap[colorName] || '#cccccc';
 }
