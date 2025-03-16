@@ -1,6 +1,6 @@
 import {Image, Money} from '@shopify/hydrogen';
 
-export function Home({money, image, title}) {
+export function LandingPage({money, image, title}) {
   return (
     <div className="max-w-4xl mx-auto px-4 py-8 sm:py-12">
       <div className="flex flex-col gap-4 sm:gap-8">

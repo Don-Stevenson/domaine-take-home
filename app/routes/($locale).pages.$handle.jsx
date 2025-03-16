@@ -1,6 +1,6 @@
 import {useLoaderData, useLocation} from '@remix-run/react';
 import {Contact} from '~/components/Contact';
-import {Home} from '~/components/Home';
+import {Home} from '~/components/LandingPage';
 
 /**
  * @type {MetaFunction<typeof loader>}
