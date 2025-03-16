@@ -1,4 +1,5 @@
 import {Image} from '@shopify/hydrogen';
+import {OnSaleBadge} from './OnSaleBadge';
 
 export function HoverImage({
   isHovered,
@@ -7,7 +8,6 @@ export function HoverImage({
   onMouseEnter,
   onMouseLeave,
   isOnSale,
-  OnSaleBadge,
   hoverImagePositionClasses = '',
 }) {
   return (
