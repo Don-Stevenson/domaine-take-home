@@ -1,7 +1,7 @@
 import {Await, useLoaderData, Link} from '@remix-run/react';
 import {Suspense} from 'react';
-import {Image, Money} from '@shopify/hydrogen';
-import {Home} from '~/components/Home';
+import {Image} from '@shopify/hydrogen';
+import {LandingPage} from '~/components/LandingPage';
 
 /**
  * @type {MetaFunction}
@@ -113,7 +113,7 @@ function RecommendedProducts({products}) {
                       className="recommended-product w-full sm:w-[calc(50%-0.5rem)] md:w-[calc(33.333%-0.667rem)] lg:w-[calc(25%-0.75rem)]"
                       to={`/products/${product.handle}`}
                     >
-                      <Home
+                      <LandingPage
                         money={product.priceRange.minVariantPrice}
                         image={product.images.nodes[0]}
                         title={product.title}
