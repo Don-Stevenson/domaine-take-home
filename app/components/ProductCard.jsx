@@ -16,6 +16,7 @@ import {CustomColorSwatch} from './CustomColorSwatch';
 
 export function ProductCard({product}) {
   const [selectedColor, setSelectedColor] = useState(null);
+  const [isHovered, setIsHovered] = useState(false);
 
   // Selects a variant with given available variant information
   const selectedVariant = useOptimisticVariant(
@@ -68,17 +69,43 @@ export function ProductCard({product}) {
           </div>
         )}
 
-        <div className="flex items-center justify-center border border-[#E8E8E8] pt-5 pb-5 rounded-xl p-5 max-w-[19.69rem]">
+        <div
+          className="flex items-center justify-center border border-[#E8E8E8] rounded-xl p-5 max-w-[19.69rem]"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
           <div className="w-full overflow-hidden flex items-center justify-center">
             {currentColorVariant?.image && (
               <Image
                 data={currentColorVariant.image}
-                className="w-[17.19rem] h-auto"
+                className="w-[17.19rem] h-auto transition-opacity duration-300"
                 alt={`${title} - ${currentColorVariant.title}`}
               />
             )}
           </div>
         </div>
+
+        {isHovered && currentColorVariant?.secondaryImage && (
+          <div
+            className="absolute pointer-events-none border border-[#E8E8E8] rounded-xl overflow-hidden"
+            style={{
+              top: '0rem',
+              right: '-1rem',
+              transform: 'translateX(100%)',
+              height: '19.69rem',
+              width: 'auto',
+              aspectRatio:
+                currentColorVariant.secondaryImage.width /
+                currentColorVariant.secondaryImage.height,
+            }}
+          >
+            <Image
+              data={currentColorVariant.secondaryImage}
+              className="h-full w-auto"
+              alt={`${title} - ${currentColorVariant.title} hover view`}
+            />
+          </div>
+        )}
       </div>
 
       <div className="flex flex-col">
