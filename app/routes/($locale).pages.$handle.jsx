@@ -1,82 +1,76 @@
 import {useLoaderData, useLocation} from '@remix-run/react';
 import {Contact} from '~/components/Contact';
-import {Home} from '~/components/LandingPage';
 
 /**
  * @type {MetaFunction<typeof loader>}
  */
 export const meta = ({data}) => {
-  return [{title: `Hydrogen | ${data?.page.title ?? ''}`}];
+  return [{title: `Hydrogen | ${data?.page?.title ?? 'Page'}`}];
 };
 
 /**
  * @param {LoaderFunctionArgs} args
  */
-export async function loader(args) {
-  // Start fetching non-critical data without blocking time to first byte
-  const deferredData = loadDeferredData(args);
+export async function loader({context, params}) {
+  try {
+    if (params.handle === 'contact') {
+      return {
+        page: {
+          title: 'Contact Us',
+          body: '',
+        },
+      };
+    }
 
-  // Await the critical data required to render initial state of the page
-  const criticalData = await loadCriticalData(args);
+    if (!params.handle) {
+      throw new Error('Missing page handle');
+    }
 
-  return {...deferredData, ...criticalData};
-}
-
-/**
- * Load data necessary for rendering content above the fold. This is the critical data
- * needed to render the page. If it's unavailable, the whole page should 400 or 500 error.
- * @param {LoaderFunctionArgs}
- */
-async function loadCriticalData({context, params}) {
-  if (!params.handle) {
-    throw new Error('Missing page handle');
-  }
-
-  const [{page}] = await Promise.all([
-    context.storefront.query(PAGE_QUERY, {
+    const {page} = await context.storefront.query(PAGE_QUERY, {
       variables: {
         handle: params.handle,
       },
-    }),
-    // Add other queries here, so that they are loaded in parallel
-  ]);
+    });
 
-  if (!page) {
-    throw new Response('Not Found', {status: 404});
+    if (!page) {
+      throw new Response('Not Found', {status: 404});
+    }
+
+    return {
+      page,
+    };
+  } catch (error) {
+    console.error('Loader error:', error);
+    return {
+      page: {
+        title: 'Error',
+        body: '',
+      },
+    };
   }
-
-  return {
-    page,
-  };
-}
-
-/**
- * Load data for rendering content below the fold. This data is deferred and will be
- * fetched after the initial page load. If it's unavailable, the page should still 200.
- * Make sure to not throw any errors here, as it will cause the page to 500.
- * @param {LoaderFunctionArgs}
- */
-function loadDeferredData({context}) {
-  return {};
 }
 
 export default function Page() {
-  /** @type {LoaderReturnData} */
-  const {page} = useLoaderData();
+  const data = useLoaderData();
   const location = useLocation();
 
-  if (location.pathname === '/pages/contact') {
-    return <Contact />;
-  }
+  try {
+    if (location.pathname.endsWith('/contact')) {
+      return <Contact />;
+    }
 
-  return (
-    <div className="page">
-      <header>
-        <h1>{page.title}</h1>
-      </header>
-      <main dangerouslySetInnerHTML={{__html: page.body}} />
-    </div>
-  );
+    return (
+      <div className="page">
+        <header>
+          <h1>{data?.page?.title}</h1>
+        </header>
+        <main dangerouslySetInnerHTML={{__html: data?.page?.body ?? ''}} />
+      </div>
+    );
+  } catch (error) {
+    console.error('Render error:', error);
+    return <div>Something went wrong. Please try again.</div>;
+  }
 }
 
 const PAGE_QUERY = `#graphql
