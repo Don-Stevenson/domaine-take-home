@@ -5,14 +5,9 @@ import {
   useSelectedOptionInUrlParam,
 } from '@shopify/hydrogen';
 import {ProductForm} from './ProductForm';
-import {
-  PriceDisplay,
-  ProductCardTitle,
-  ProductCardVendor,
-} from './typography/ProductCardFont';
-
 import {CustomColorSwatch} from './CustomColorSwatch';
 import {HoverImage} from './HoverImage';
+import {ProductDetails} from './ProductDetails';
 
 export function ProductCard({product}) {
   const [selectedColor, setSelectedColor] = useState(null);
@@ -72,7 +67,6 @@ export function ProductCard({product}) {
           hoverImagePositionClasses="top-0 -right-4"
         />
       </div>
-
       <div className="flex flex-col">
         <CustomColorSwatch
           colorOptions={colorOptions}
@@ -80,30 +74,13 @@ export function ProductCard({product}) {
           setSelectedColor={setSelectedColor}
           currentColorVariant={currentColorVariant}
         />
-        {/* Product Details Section */}
-        <div className="flex flex-col gap-[0.375rem]">
-          {vendor && <ProductCardVendor>{vendor}</ProductCardVendor>}
-          {title && <ProductCardTitle>{title}</ProductCardTitle>}
-          <div className="flex justify-start items-center gap-2">
-            {isOnSale ? (
-              <>
-                <PriceDisplay className="line-through">
-                  {currentColorVariant?.compareAtPrice &&
-                    formatPrice(currentColorVariant.compareAtPrice)}
-                </PriceDisplay>
-                <PriceDisplay textColorClasses="text-red-500">
-                  {currentColorVariant?.price &&
-                    formatPrice(currentColorVariant.price)}
-                </PriceDisplay>
-              </>
-            ) : (
-              <PriceDisplay>
-                {currentColorVariant?.price &&
-                  formatPrice(currentColorVariant.price)}
-              </PriceDisplay>
-            )}
-          </div>
-        </div>
+        <ProductDetails
+          vendor={vendor}
+          title={title}
+          isOnSale={isOnSale}
+          currentColorVariant={currentColorVariant}
+          formatPrice={formatPrice}
+        />
         <div className="mt-8">
           <ProductForm
             selectedVariant={currentColorVariant || selectedVariant}
