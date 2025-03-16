@@ -59,11 +59,11 @@ export default function Collection() {
 
   return (
     <>
-      <div className="flex flex-start gap-4">
+      <div className="flex flex-wrap gap-4">
         {products.nodes.map((product) => (
           <Link
             key={product.id}
-            className="recommended-product"
+            className="recommended-product w-full sm:w-[calc(50%-0.5rem)] md:w-[calc(33.333%-0.667rem)] lg:w-[calc(25%-0.75rem)]"
             to={`/products/${product.handle}`}
           >
             <Catalog product={product} key={product.id} />
