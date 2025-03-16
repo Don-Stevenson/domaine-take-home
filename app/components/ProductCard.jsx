@@ -6,6 +6,12 @@ import {
   useSelectedOptionInUrlParam,
 } from '@shopify/hydrogen';
 import {ProductForm} from './ProductForm';
+import {
+  OnSaleBadge,
+  PriceDisplay,
+  ProductCardTitle,
+  ProductCardVendor,
+} from './typography/ProductCardFont';
 
 export function ProductCard({product}) {
   const [selectedColor, setSelectedColor] = useState(null);
@@ -60,9 +66,7 @@ export function ProductCard({product}) {
         {/* Sale badge */}
         {isOnSale && (
           <div className="absolute top-5 left-5">
-            <div className="text-red-600 font-franklin font-medium text-sm leading-[1.12rem] text-center px-3 py-1.5 rounded-full border border-red-600 w-[5.7rem] h-[1.85rem] flex items-center justify-center">
-              On Sale!
-            </div>
+            <OnSaleBadge>On Sale!</OnSaleBadge>
           </div>
         )}
 
@@ -109,39 +113,28 @@ export function ProductCard({product}) {
           })}
         </div>
         <div className="flex flex-col gap-[0.375rem]">
-          {/* Vendor */}
-          {vendor && (
-            <div className="font-roboto font-normal text-sm leading-4 text-[#111111] w-auto h-4">
-              {vendor}
-            </div>
-          )}
-          {/* Title */}
-          <div className="text-[#0A4874] font-roboto font-medium text-base leading-[1.125rem]">
-            {title}
-          </div>
-
-          {/* Price display */}
+          {vendor && <ProductCardVendor>{vendor}</ProductCardVendor>}
+          <ProductCardTitle>{title}</ProductCardTitle>
           <div className="flex justify-start items-center gap-2">
             {isOnSale ? (
               <>
-                <span className="font-roboto font-normal text-[14px] leading-[16px] text-center text-gray-500 line-through">
+                <PriceDisplay className="line-through">
                   {currentColorVariant?.compareAtPrice &&
                     formatPrice(currentColorVariant.compareAtPrice)}
-                </span>
-                <span className="font-roboto font-normal text-[14px] leading-[16px] text-center text-red-500">
+                </PriceDisplay>
+                <PriceDisplay textColorClasses="text-red-500">
                   {currentColorVariant?.price &&
                     formatPrice(currentColorVariant.price)}
-                </span>
+                </PriceDisplay>
               </>
             ) : (
-              <span className="font-roboto font-normal text-[14px] leading-[16px] text-center text-gray-500">
+              <PriceDisplay>
                 {currentColorVariant?.price &&
                   formatPrice(currentColorVariant.price)}
-              </span>
+              </PriceDisplay>
             )}
           </div>
         </div>
-        {/*add to cart */}
         <div className="mt-8">
           <ProductForm
             selectedVariant={currentColorVariant || selectedVariant}
