@@ -6,11 +6,11 @@ import {
 } from '@shopify/hydrogen';
 import {ProductForm} from './ProductForm';
 import {
-  OnSaleBadge,
   PriceDisplay,
   ProductCardTitle,
   ProductCardVendor,
 } from './typography/ProductCardFont';
+
 import {CustomColorSwatch} from './CustomColorSwatch';
 import {HoverImage} from './HoverImage';
 
@@ -69,7 +69,6 @@ export function ProductCard({product}) {
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
           isOnSale={isOnSale}
-          OnSaleBadge={OnSaleBadge}
           hoverImagePositionClasses="top-0 -right-4"
         />
       </div>
