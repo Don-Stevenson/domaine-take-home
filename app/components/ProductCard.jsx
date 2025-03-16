@@ -48,7 +48,6 @@ export function ProductCard({product}) {
     );
   })();
 
-  // Update formatPrice to use formatMoney
   const formatPrice = (priceObj) => {
     const {amount} = priceObj;
     return `${parseFloat(amount).toFixed(2)}`;
