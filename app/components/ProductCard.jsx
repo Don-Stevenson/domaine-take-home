@@ -1,5 +1,4 @@
 import {useState} from 'react';
-import {Image} from '@shopify/hydrogen';
 import {
   useOptimisticVariant,
   getAdjacentAndFirstAvailableVariants,
@@ -13,6 +12,7 @@ import {
   ProductCardVendor,
 } from './typography/ProductCardFont';
 import {CustomColorSwatch} from './CustomColorSwatch';
+import {HoverImage} from './HoverImage';
 
 export function ProductCard({product}) {
   const [selectedColor, setSelectedColor] = useState(null);
@@ -61,51 +61,17 @@ export function ProductCard({product}) {
 
   return (
     <div className="flex flex-col gap-[0.938rem]">
-      {/* Product Image Section */}
       <div className="relative">
-        {isOnSale && (
-          <div className="absolute top-5 left-5">
-            <OnSaleBadge>On Sale!</OnSaleBadge>
-          </div>
-        )}
-
-        <div
-          className="flex items-center justify-center border border-[#E8E8E8] rounded-xl p-5 max-w-[19.69rem]"
+        <HoverImage
+          isHovered={isHovered}
+          currentColorVariant={currentColorVariant}
+          title={title}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
-        >
-          <div className="w-full overflow-hidden flex items-center justify-center">
-            {currentColorVariant?.image && (
-              <Image
-                data={currentColorVariant.image}
-                className="w-[17.19rem] h-auto transition-opacity duration-300"
-                alt={`${title} - ${currentColorVariant.title}`}
-              />
-            )}
-          </div>
-        </div>
-
-        {isHovered && currentColorVariant?.secondaryImage && (
-          <div
-            className="absolute pointer-events-none border border-[#E8E8E8] rounded-xl overflow-hidden"
-            style={{
-              top: '0rem',
-              right: '-1rem',
-              transform: 'translateX(100%)',
-              height: '19.69rem',
-              width: 'auto',
-              aspectRatio:
-                currentColorVariant.secondaryImage.width /
-                currentColorVariant.secondaryImage.height,
-            }}
-          >
-            <Image
-              data={currentColorVariant.secondaryImage}
-              className="h-full w-auto"
-              alt={`${title} - ${currentColorVariant.title} hover view`}
-            />
-          </div>
-        )}
+          isOnSale={isOnSale}
+          OnSaleBadge={OnSaleBadge}
+          hoverImagePositionClasses="top-0 -right-4"
+        />
       </div>
 
       <div className="flex flex-col">
