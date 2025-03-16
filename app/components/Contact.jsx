@@ -1,21 +1,32 @@
 export function Contact() {
   return (
     <div className="max-w-4xl mx-auto px-4 py-12">
-      <div className="flex flex-col gap-8">
-        <div className="text-center">
-          <h1 className="text-[#0A4874] font-roboto font-medium text-3xl md:text-4xl mb-4">
+      <div className="flex justify-center items-center flex-col gap-8">
+        <div className="flex flex-col justify-center items-center text-center max-w-[300px] md:max-w-[615px] mx-auto gap-4">
+          <div className="text-[#0A4874] font-roboto font-medium text-3xl md:text-4xl mb-4">
             Contact Me
-          </h1>
-          <p className="font-roboto text-gray-600 max-w-2xl mx-auto">
-            Have questions or need assistance? I&apos;m here to help! Reach out
-            to me using the information below.
-          </p>
+          </div>
+          <div className="font-roboto text-gray-600 text-base max-w-2xl mx-auto">
+            Have any development questions or need assistance?
+          </div>
+          <div className="font-roboto text-gray-600 text-lg max-w-2xl mx-auto">
+            I&apos;m here to help!
+            {String.fromCodePoint('0x1f603')}
+          </div>
+          <div className="font-roboto text-base text-gray-600 max-w-2xl mx-auto">
+            I&apos;m a full stack developer with a passion for building scalable
+            and efficient web applications. I&apos;m currently available and can
+            help you with your next project.
+          </div>
+          <div className="font-roboto text-gray-600 max-w-2xl mx-auto">
+            Reach out to me using the information below.
+          </div>
         </div>
         <div className="flex flex-col md:flex-row gap-8 justify-center">
           <div className="flex-1 border border-[#E8E8E8] rounded-xl p-6 md:p-8 bg-white shadow-sm">
-            <h2 className="text-[#0A4874] font-roboto font-medium text-xl mb-6">
+            <div className="text-[#0A4874] font-roboto font-medium text-xl mb-6">
               Contact Information
-            </h2>
+            </div>
             <div className="space-y-6">
               <div className="flex flex-col gap-1">
                 <span className="font-roboto font-medium text-[#111111]">
@@ -54,9 +65,9 @@ export function Contact() {
             </div>
           </div>
           <div className="flex flex-col border border-[#E8E8E8] rounded-xl p-6 md:p-8 bg-white shadow-sm">
-            <h2 className="text-[#0A4874] font-roboto font-medium text-xl mb-4">
+            <div className="text-[#0A4874] font-roboto font-medium text-xl mb-4">
               Business Hours
-            </h2>
+            </div>
             <div className="flex flex-col gap-4">
               <div className="flex justify-between gap-2">
                 <span className="font-roboto font-medium">Monday - Friday</span>
