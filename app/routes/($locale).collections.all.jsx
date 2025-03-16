@@ -2,6 +2,7 @@ import {useLoaderData, Link} from '@remix-run/react';
 import {getPaginationVariables, Image, Money} from '@shopify/hydrogen';
 import {useVariantUrl} from '~/lib/variants';
 import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
+import {Catalog} from '~/components/Catalog';
 
 /**
  * @type {MetaFunction<typeof loader>}
@@ -54,25 +55,22 @@ function loadDeferredData({context}) {
 }
 
 export default function Collection() {
-  /** @type {LoaderReturnData} */
   const {products} = useLoaderData();
 
   return (
-    <div className="collection">
-      <h1>Products</h1>
-      <PaginatedResourceSection
-        connection={products}
-        resourcesClassName="products-grid"
-      >
-        {({node: product, index}) => (
-          <ProductItem
+    <>
+      <div className="flex flex-wrap gap-4">
+        {products.nodes.map((product) => (
+          <Link
             key={product.id}
-            product={product}
-            loading={index < 8 ? 'eager' : undefined}
-          />
-        )}
-      </PaginatedResourceSection>
-    </div>
+            className="recommended-product w-full sm:w-[calc(50%-0.5rem)] md:w-[calc(33.333%-0.667rem)] lg:w-[calc(25%-0.75rem)]"
+            to={`/products/${product.handle}`}
+          >
+            <Catalog product={product} key={product.id} />
+          </Link>
+        ))}
+      </div>
+    </>
   );
 }
 

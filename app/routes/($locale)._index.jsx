@@ -1,6 +1,7 @@
 import {Await, useLoaderData, Link} from '@remix-run/react';
 import {Suspense} from 'react';
 import {Image, Money} from '@shopify/hydrogen';
+import {Home} from '~/components/Home';
 
 /**
  * @type {MetaFunction}
@@ -83,11 +84,12 @@ function FeaturedCollection({collection}) {
       to={`/collections/${collection.handle}`}
     >
       {image && (
-        <div className="featured-collection-image">
-          <Image data={image} sizes="100vw" />
+        <div className="flex items-center justify-center border border-[#E8E8E8] pt-5 pb-5 rounded-xl p-5 max-w-[19.69rem]">
+          <div className="featured-collection-image">
+            <Image data={image} sizes="100vw" />
+          </div>
         </div>
       )}
-      <h1>{collection.title}</h1>
     </Link>
   );
 }
@@ -100,27 +102,22 @@ function FeaturedCollection({collection}) {
 function RecommendedProducts({products}) {
   return (
     <div className="recommended-products">
-      <h2>Recommended Products</h2>
       <Suspense fallback={<div>Loading...</div>}>
         <Await resolve={products}>
           {(response) => (
-            <div className="recommended-products-grid">
+            <div className="flex flex-wrap gap-4">
               {response
                 ? response.products.nodes.map((product) => (
                     <Link
                       key={product.id}
-                      className="recommended-product"
+                      className="recommended-product w-full sm:w-[calc(50%-0.5rem)] md:w-[calc(33.333%-0.667rem)] lg:w-[calc(25%-0.75rem)]"
                       to={`/products/${product.handle}`}
                     >
-                      <Image
-                        data={product.images.nodes[0]}
-                        aspectRatio="1/1"
-                        sizes="(min-width: 45em) 20vw, 50vw"
+                      <Home
+                        money={product.priceRange.minVariantPrice}
+                        image={product.images.nodes[0]}
+                        title={product.title}
                       />
-                      <h4>{product.title}</h4>
-                      <small>
-                        <Money data={product.priceRange.minVariantPrice} />
-                      </small>
                     </Link>
                   ))
                 : null}

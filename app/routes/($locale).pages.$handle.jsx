@@ -1,4 +1,6 @@
-import {useLoaderData} from '@remix-run/react';
+import {useLoaderData, useLocation} from '@remix-run/react';
+import {Contact} from '~/components/Contact';
+import {Home} from '~/components/Home';
 
 /**
  * @type {MetaFunction<typeof loader>}
@@ -61,6 +63,11 @@ function loadDeferredData({context}) {
 export default function Page() {
   /** @type {LoaderReturnData} */
   const {page} = useLoaderData();
+  const location = useLocation();
+
+  if (location.pathname === '/pages/contact') {
+    return <Contact />;
+  }
 
   return (
     <div className="page">
