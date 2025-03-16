@@ -56,7 +56,7 @@ export function Contact() {
                   Email
                 </span>
                 <a
-                  href="mailto:contact@example.com"
+                  href="mailto:dsteven1@gmail.com"
                   className="font-roboto text-[#0A4874] hover:underline"
                 >
                   dsteven1@gmail.com
