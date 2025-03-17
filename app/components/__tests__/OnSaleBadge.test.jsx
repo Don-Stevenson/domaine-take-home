@@ -1,12 +1,10 @@
 import '@testing-library/jest-dom';
-import React from 'react';
 import {render, screen} from '@testing-library/react';
 import {OnSaleBadge} from '../OnSaleBadge';
 
 describe('OnSaleBadge', () => {
   it('renders with default props', () => {
     render(<OnSaleBadge>Sale</OnSaleBadge>);
-
     const badge = screen.getByText('Sale');
     expect(badge).toBeInTheDocument();
     expect(badge).toHaveClass('border-red-600');
