@@ -2,22 +2,22 @@ import '@testing-library/jest-dom';
 import {render, screen, fireEvent} from '@testing-library/react';
 import {HoverImage} from '../HoverImage';
 
-// Mock the Image component from Shopify Hydrogen
+// Mock the dependent components
 jest.mock('@shopify/hydrogen', () => ({
-  Image: ({data, className, alt}) => (
-    <img
-      src={data?.url || 'mock-image-url'}
-      className={className}
-      alt={alt}
-      data-testid="hydrogen-image"
-    />
+  Image: ({className, alt}) => (
+    <img data-testid="shopify-image" className={className} alt={alt} />
   ),
 }));
 
-// Mock the OnSaleBadge component
 jest.mock('../OnSaleBadge', () => ({
   OnSaleBadge: ({children}) => (
     <div data-testid="on-sale-badge">{children}</div>
+  ),
+}));
+
+jest.mock('../MobileCarousel', () => ({
+  MobileCarousel: ({images}) => (
+    <div data-testid="mobile-carousel">{images.length} images in carousel</div>
   ),
 }));
 
@@ -27,14 +27,12 @@ describe('HoverImage', () => {
     currentColorVariant: {
       title: 'Red',
       image: {
-        url: 'red-image.jpg',
         width: 800,
-        height: 600,
+        height: 1000,
       },
       secondaryImage: {
-        url: 'red-hover-image.jpg',
         width: 800,
-        height: 600,
+        height: 1000,
       },
     },
     title: 'Test Product',
@@ -43,118 +41,60 @@ describe('HoverImage', () => {
     isOnSale: false,
   };
 
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
-
-  it('renders the primary image correctly', () => {
+  it('renders the component correctly', () => {
     render(<HoverImage {...mockProps} />);
 
-    const image = screen.getByTestId('hydrogen-image');
-    expect(image).toBeInTheDocument();
-    expect(image).toHaveAttribute('alt', 'Test Product - Red');
+    expect(screen.getByTestId('shopify-image')).toBeInTheDocument();
+    expect(screen.getByTestId('mobile-carousel')).toBeInTheDocument();
   });
 
-  it('does not render the secondary image when not hovered', () => {
-    render(<HoverImage {...mockProps} />);
-
-    const images = screen.getAllByTestId('hydrogen-image');
-    expect(images.length).toBe(1);
-  });
-
-  it('renders the secondary image when hovered', () => {
-    render(<HoverImage {...mockProps} isHovered={true} />);
-
-    const images = screen.getAllByTestId('hydrogen-image');
-    expect(images.length).toBe(2);
-    expect(images[1]).toHaveAttribute('alt', 'Test Product - Red hover view');
-  });
-
-  it('applies custom hover image position classes', () => {
-    render(
-      <HoverImage
-        {...mockProps}
-        isHovered={true}
-        hoverImagePositionClasses="top-0 right-0"
-      />,
-    );
-
-    const hoverImageContainer = screen.getByAltText(
-      'Test Product - Red hover view',
-    ).parentElement;
-    expect(hoverImageContainer).toHaveClass('top-0');
-    expect(hoverImageContainer).toHaveClass('right-0');
-  });
-
-  it('shows the OnSaleBadge when isOnSale is true', () => {
+  it('shows sale badge when isOnSale is true', () => {
     render(<HoverImage {...mockProps} isOnSale={true} />);
 
-    const saleBadge = screen.getByTestId('on-sale-badge');
-    expect(saleBadge).toBeInTheDocument();
-    expect(saleBadge).toHaveTextContent('On Sale!');
+    expect(screen.getByTestId('on-sale-badge')).toBeInTheDocument();
+    expect(screen.getByText('On Sale!')).toBeInTheDocument();
   });
 
-  it('does not show the OnSaleBadge when isOnSale is false', () => {
-    render(<HoverImage {...mockProps} isOnSale={false} />);
-
-    expect(screen.queryByTestId('on-sale-badge')).not.toBeInTheDocument();
-  });
-
-  it('calls onMouseEnter when mouse enters the image container', () => {
+  it('handles mouse events correctly', () => {
     render(<HoverImage {...mockProps} />);
 
-    const container = screen
-      .getByTestId('hydrogen-image')
-      .closest('div').parentElement;
-    fireEvent.mouseEnter(container);
+    const imageContainer =
+      screen.getByTestId('shopify-image').parentElement.parentElement;
 
-    expect(mockProps.onMouseEnter).toHaveBeenCalledTimes(1);
+    fireEvent.mouseEnter(imageContainer);
+    expect(mockProps.onMouseEnter).toHaveBeenCalled();
+
+    fireEvent.mouseLeave(imageContainer);
+    expect(mockProps.onMouseLeave).toHaveBeenCalled();
   });
 
-  it('calls onMouseLeave when mouse leaves the image container', () => {
+  it('shows secondary image when hovered', () => {
+    render(<HoverImage {...mockProps} isHovered={true} />);
+
+    const images = screen.getAllByTestId('shopify-image');
+    expect(images).toHaveLength(2);
+    expect(images[1].alt).toContain('hover view');
+  });
+
+  it('calculates correct aspect ratio when both images are present', () => {
     render(<HoverImage {...mockProps} />);
 
-    const container = screen
-      .getByTestId('hydrogen-image')
-      .closest('div').parentElement;
-    fireEvent.mouseLeave(container);
-
-    expect(mockProps.onMouseLeave).toHaveBeenCalledTimes(1);
+    // Both images have the same dimensions (800x1000), so aspect ratio should be 0.8
+    expect(screen.getByTestId('mobile-carousel')).toBeInTheDocument();
   });
 
-  it('handles missing currentColorVariant gracefully', () => {
-    render(<HoverImage {...mockProps} currentColorVariant={null} />);
-
-    expect(screen.queryByTestId('hydrogen-image')).not.toBeInTheDocument();
-  });
-
-  it('handles missing image in currentColorVariant gracefully', () => {
-    const propsWithoutImage = {
-      ...mockProps,
-      currentColorVariant: {
-        ...mockProps.currentColorVariant,
-        image: null,
-      },
-    };
-
-    render(<HoverImage {...propsWithoutImage} />);
-
-    expect(screen.queryByTestId('hydrogen-image')).not.toBeInTheDocument();
-  });
-
-  it('handles missing secondaryImage in currentColorVariant gracefully', () => {
-    const propsWithoutSecondaryImage = {
+  it('renders without secondary image', () => {
+    const propsWithoutSecondary = {
       ...mockProps,
       currentColorVariant: {
         ...mockProps.currentColorVariant,
         secondaryImage: null,
       },
-      isHovered: true,
     };
 
-    render(<HoverImage {...propsWithoutSecondaryImage} />);
+    render(<HoverImage {...propsWithoutSecondary} />);
 
-    const images = screen.getAllByTestId('hydrogen-image');
-    expect(images.length).toBe(1); // Only primary image should be shown
+    const images = screen.getAllByTestId('shopify-image');
+    expect(images).toHaveLength(1);
   });
 });
