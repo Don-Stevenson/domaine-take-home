@@ -123,7 +123,7 @@ For security reasons, the actual values are not included in this repository. To 
 
 - Email: dsteven1@gmail.com
 
-Please reach out through any of the above channels, and I'll provide you with the required credentials securely.
+Please reach out and I'll provide you with the required credentials securely.
 
 ### Building for production
 
