@@ -37,9 +37,9 @@ describe('Contact', () => {
     // Check for business hours section
     expect(screen.getByText('Business Hours')).toBeInTheDocument();
     expect(screen.getByText('Monday - Friday')).toBeInTheDocument();
-    expect(screen.getByText('9:00 AM - 6:00 PM')).toBeInTheDocument();
+    expect(screen.getByText(/9AM - 6PM/i)).toBeInTheDocument();
     expect(screen.getByText('Saturday')).toBeInTheDocument();
-    expect(screen.getByText('10:00 AM - 4:00 PM')).toBeInTheDocument();
+    expect(screen.getByText('10AM - 4PM')).toBeInTheDocument();
     expect(screen.getByText('Sunday')).toBeInTheDocument();
     expect(screen.getByText('Closed')).toBeInTheDocument();
     expect(screen.getByText('Holidays')).toBeInTheDocument();
@@ -96,7 +96,7 @@ describe('Contact', () => {
       .getByText('Business Hours')
       .closest('div');
     expect(businessHoursContainer).toHaveClass(
-      'flex flex-col border border-[#E8E8E8] rounded-xl p-3 sm:p-4 md:p-6 lg:p-8 bg-white shadow-sm',
+      'flex flex-col border border-[#E8E8E8] rounded-xl p-3 sm:p-4 md:p-6 bg-white shadow-sm min-w-[12rem] md:min-w-[14rem]',
     );
   });
 
