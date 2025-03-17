@@ -8,6 +8,8 @@ This is a Shopify storefront built with Hydrogen. It is a simple storefront that
 
 ### Main Features Implemented
 
+##### _note: You must click on the "Current Catalog" or "Our latest products" to see the completed component that has been made to the Figma designs as requested._
+
 ### User Stories Fulfilled
 
 - **Sale Indicators**: I implemented visual cues for on-sale products through:
@@ -40,7 +42,7 @@ This is a Shopify storefront built with Hydrogen. It is a simple storefront that
 
 ## Repository Structure
 
-The main component files can be found in:
+The main component files I worked on can be found in:
 
 - `app/components/ProductCard.jsx` - The main product card component
 - other components I created are in the `app/components` folder are:
