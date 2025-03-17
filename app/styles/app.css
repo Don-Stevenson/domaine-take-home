@@ -32,9 +32,9 @@ aside {
   box-shadow: 0 0 50px rgba(0, 0, 0, 0.3);
   height: 100vh;
   max-width: var(--aside-width);
-  min-width: var(--aside-width);
+  min-width: min(var(--aside-width), 65vw);
   position: fixed;
-  right: calc(-1 * var(--aside-width));
+  right: calc(-1 * min(var(--aside-width), 65vw));
   top: 0;
   transition: transform 200ms ease-in-out;
 }
@@ -108,7 +108,7 @@ aside li {
   left: 0;
   position: absolute;
   top: 0;
-  width: calc(100% - var(--aside-width));
+  width: calc(100% - min(var(--aside-width), 65vw));
 }
 
 .overlay .light {
@@ -129,7 +129,7 @@ aside li {
 }
 /* reveal aside */
 .overlay.expanded aside {
-  transform: translateX(calc(var(--aside-width) * -1));
+  transform: translateX(calc(min(var(--aside-width), 65vw) * -1));
 }
 
 button.reset {
