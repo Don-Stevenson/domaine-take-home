@@ -71,7 +71,7 @@ describe('Contact', () => {
     const mainContainer = screen.getByText('Contact Me').closest('div')
       .parentElement.parentElement;
     expect(mainContainer).toHaveClass(
-      'flex justify-center items-center flex-col gap-8',
+      'flex flex-col items-center justify-center md:items-start md:justify-start px-2 sm:px-4 py-6 sm:py-8 md:py-12 sm:gap-6 md:gap-8 max-w-[190px] sm:max-w-[390px] md:max-w-[490px] lg:max-w-[590px]',
     );
 
     // Check heading
@@ -79,15 +79,16 @@ describe('Contact', () => {
     expect(heading).toHaveClass('text-[#0A4874]');
     expect(heading).toHaveClass('font-roboto');
     expect(heading).toHaveClass('font-medium');
-    expect(heading).toHaveClass('text-3xl');
-    expect(heading).toHaveClass('md:text-4xl');
+    expect(heading).toHaveClass(
+      'text-[#0A4874] font-roboto font-medium text-xl sm:text-2xl md:text-3xl lg:text-4xl mb-1 sm:mb-2 md:mb-4 break-words',
+    );
 
     // Check contact information container
     const contactInfoContainer = screen
       .getByText('Contact Information')
       .closest('div');
     expect(contactInfoContainer).toHaveClass(
-      ' text-[#0A4874] font-roboto font-medium text-xl mb-6',
+      'flex-1 border border-[#E8E8E8] rounded-xl p-3 sm:p-4 md:p-6 lg:p-8 bg-white shadow-sm',
     );
 
     // Check business hours container
@@ -95,7 +96,7 @@ describe('Contact', () => {
       .getByText('Business Hours')
       .closest('div');
     expect(businessHoursContainer).toHaveClass(
-      ' text-[#0A4874] font-roboto font-medium text-xl mb-4',
+      'flex flex-col border border-[#E8E8E8] rounded-xl p-3 sm:p-4 md:p-6 lg:p-8 bg-white shadow-sm',
     );
   });
 
@@ -107,7 +108,7 @@ describe('Contact', () => {
       .getByText('Contact Information')
       .closest('div').parentElement;
     expect(flexContainer).toHaveClass(
-      'flex-1 border border-[#E8E8E8] rounded-xl p-6 md:p-8 bg-white shadow-sm',
+      'flex flex-col lg:flex-row gap-4 sm:gap-6 md:gap-8',
     );
   });
 
