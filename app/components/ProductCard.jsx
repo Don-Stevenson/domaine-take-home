@@ -1,4 +1,4 @@
-import {useState, react} from 'react';
+import {useState} from 'react';
 import {
   useOptimisticVariant,
   getAdjacentAndFirstAvailableVariants,
