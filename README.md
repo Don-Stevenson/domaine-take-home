@@ -8,7 +8,7 @@ This is a Shopify storefront built with Hydrogen. It is a simple storefront that
 
 ### Main Features Implemented
 
-##### _note: You must click on the "Current Catalog" or "Our latest products" to see the completed component that has been made to the Figma designs as requested._
+##### note: You must click on the "Current Catalog" or "Our latest products" to see the completed component that has been made to the Figma designs as requested.
 
 ### User Stories Fulfilled
 
@@ -53,6 +53,8 @@ The main component files I worked on can be found in:
   - `Catalog.jsx` - A component that displays a list of products
   - `Landing.jsx` - A component that displays a landing page with products
   - `CustomColorSwatch.jsx` - A component that displays a color swatch for a product
+  - `MobileCarousel.jsx` - A component that is optimised for mobile
+  - `CarouselDots.jsx` - A component that renders dots based on the number of images
 
 ## Development Process
 
