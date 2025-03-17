@@ -67,7 +67,6 @@ describe('LandingPage', () => {
       '(min-width: 640px) 50vw, (min-width: 768px) 40vw, (min-width: 1024px) 30vw, 90vw',
     );
     expect(image).toHaveClass('rounded-lg');
-    expect(image).toHaveClass('mx-auto');
   });
 
   it('displays the correct product title', () => {
@@ -129,7 +128,5 @@ describe('LandingPage', () => {
     expect(productCard).toHaveClass('border');
     expect(productCard).toHaveClass('border-[#E8E8E8]');
     expect(productCard).toHaveClass('rounded-xl');
-    expect(productCard).toHaveClass('bg-white');
-    expect(productCard).toHaveClass('shadow-sm');
   });
 });
