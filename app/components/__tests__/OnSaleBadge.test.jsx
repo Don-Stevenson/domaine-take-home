@@ -60,13 +60,13 @@ describe('OnSaleBadge', () => {
     render(<OnSaleBadge>Sale</OnSaleBadge>);
 
     const badge = screen.getByText('Sale');
-    expect(badge).toHaveClass('text-sm');
-    expect(badge).toHaveClass('leading-[1.12rem]');
+    expect(badge).toHaveClass('md:text-sm');
+    expect(badge).toHaveClass('md:leading-[1.12rem]');
     expect(badge).toHaveClass('text-center');
-    expect(badge).toHaveClass('px-3');
-    expect(badge).toHaveClass('py-1.5');
-    expect(badge).toHaveClass('w-[5.7rem]');
-    expect(badge).toHaveClass('h-[1.85rem]');
+    expect(badge).toHaveClass('md:px-3');
+    expect(badge).toHaveClass('md:py-1.5');
+    expect(badge).toHaveClass('md:w-[5.7rem]');
+    expect(badge).toHaveClass('md:h-[1.85rem]');
     expect(badge).toHaveClass('flex');
     expect(badge).toHaveClass('items-center');
     expect(badge).toHaveClass('justify-center');
