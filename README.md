@@ -64,7 +64,8 @@ During development, I focused on:
 6. Ensuring accessibility standards were met for the elements I created
 7. Wrote simple contact, catalog, and landing page components
 8. Endsured that you can add multiple items to the cart from the ProductCard.jsx component
-9. improved error handling for app/routes/(\$locale).products.$handle.jsx.
+9. Improved error handling for app/routes/(\$locale).products.$handle.jsx.
+10. Improved the aside menu to be more responsive and mobile friendly.
 
 ## Future Improvements
 
@@ -74,8 +75,8 @@ I would like to have enhanced the implementation with:
 - Adding tests to the deployment pipeline
 - Further refactoring the code to be more reusable and modular.
 - Remove the different css libraries and use only TailwindCSS.
-- fixed navbar css squashing issues on very small screens.
-- fixed the double 'home' link on the navbar on mobile screens only :shrug:
+- fix navbar css squashing issues on very small screens (e.g. the onsale badge moves slightly on to the main image at 320px wide).
+- fix the double 'home' link on the navbar on mobile screens only (I tried to fix this with out much success).
 - improve the overall styling to make the site more eyecatching
 
 ## Links
