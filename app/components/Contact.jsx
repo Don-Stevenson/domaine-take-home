@@ -27,7 +27,7 @@ export function Contact() {
             <span className="text-[#0A4874] font-roboto font-medium text-base sm:text-lg md:text-xl mb-3 sm:mb-4 md:mb-6 flex flex-wrap">
               Contact Information
             </span>
-            <div className="space-y-4 sm:space-y-5 md:space-y-6">
+            <div className="space-y-4 sm:space-y-5 md:space-y-6 min-w-[10rem] md:min-w-[12rem]">
               <div className="flex flex-col gap-1">
                 <span className="font-roboto font-medium text-[#111111] text-xs sm:text-sm md:text-base flex flex-wrap">
                   Name
