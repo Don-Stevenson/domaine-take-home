@@ -68,8 +68,8 @@ export function Contact() {
               </div>
             </div>
           </div>
-          <div className="flex flex-col border border-[#E8E8E8] rounded-xl p-3 sm:p-4 md:p-6 lg:p-8 bg-white shadow-sm">
-            <span className="text-[#0A4874] font-roboto font-medium text-base sm:text-lg md:text-xl mb-3 sm:mb-4 flex flex-wrap">
+          <div className="flex flex-col border border-[#E8E8E8] rounded-xl p-3 sm:p-4 md:p-6 bg-white shadow-sm min-w-[12rem] md:min-w-[14rem]">
+            <span className="text-[#0A4874] font-roboto font-medium text-base sm:text-lg md:text-xl mb-3 sm:mb-4 flex">
               Business Hours
             </span>
             <div className="flex flex-col gap-3 sm:gap-4">
@@ -78,7 +78,7 @@ export function Contact() {
                   Monday - Friday
                 </span>
                 <span className="font-roboto text-gray-700 text-xs sm:text-sm md:text-base flex flex-wrap">
-                  9:00 AM - 6:00 PM
+                  9AM - 6PM
                 </span>
               </div>
               <div className="flex flex-col sm:flex-row sm:justify-between gap-1 sm:gap-2">
@@ -86,7 +86,7 @@ export function Contact() {
                   Saturday
                 </span>
                 <span className="font-roboto text-gray-700 text-xs sm:text-sm md:text-base flex flex-wrap">
-                  10:00 AM - 4:00 PM
+                  10AM - 4PM
                 </span>
               </div>
               <div className="flex flex-col sm:flex-row sm:justify-between gap-1 sm:gap-2">
