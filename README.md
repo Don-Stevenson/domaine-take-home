@@ -105,6 +105,26 @@ git clone <repository-url>
 npm install
 ```
 
+### ENV Variables
+
+This project requires several environment variables to run. Create a `.env` file in the root directory with the following variables:
+
+```env
+PUBLIC_STOREFRONT_ID=
+PUBLIC_STOREFRONT_API_TOKEN=
+PUBLIC_STORE_DOMAIN=
+PRIVATE_STOREFRONT_API_TOKEN=
+PUBLIC_CUSTOMER_ACCOUNT_API_CLIENT_ID=
+PUBLIC_CUSTOMER_ACCOUNT_API_URL=
+SHOP_ID=
+```
+
+For security reasons, the actual values are not included in this repository. To obtain the necessary credentials:
+
+- Email: dsteven1@gmail.com
+
+Please reach out through any of the above channels, and I'll provide you with the required credentials securely.
+
 ### Building for production
 
 ```bash
