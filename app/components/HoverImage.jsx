@@ -29,6 +29,7 @@ export function HoverImage({
               data={currentColorVariant.image}
               className="w-[17.19rem] h-auto transition-opacity duration-300"
               alt={`${title} - ${currentColorVariant.title}`}
+              sizes="(min-width: 768px) 275px, 100vw"
             />
           )}
         </div>
@@ -47,6 +48,7 @@ export function HoverImage({
             data={currentColorVariant.secondaryImage}
             className="h-full w-auto"
             alt={`${title} - ${currentColorVariant.title} hover view`}
+            sizes="(min-width: 768px) 315px, 100vw"
           />
         </div>
       )}
