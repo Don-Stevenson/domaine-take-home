@@ -2,20 +2,20 @@ import {Image, Money} from '@shopify/hydrogen';
 export function Catalog({product}) {
   return (
     <div className="max-w-4xl mx-auto px-4 py-8 sm:py-12 mt-8">
-      <div className="flex flex-col gap-4 sm:gap-8">
+      <div className="flex flex-col gap-4 sm:gap-8 w-[15rem]">
         <div className="text-[#0A4874] font-roboto font-medium text-2xl sm:text-3xl md:text-4xl mb-2 sm:mb-4">
           Current Catalog
         </div>
-        <span className="font-roboto text-gray-600 max-w-[10rem] md:max-w-auto sm:max-w-2xl text-sm sm:mx-0 sm:px-0">
+        <span className="font-roboto text-gray-600 max-w-auto text-sm sm:mx-0 sm:px-0">
           Check out our current catalog below. Quality t-shirts at unbeatable
           prices!
         </span>
         <div className="flex">
-          <div className="border border-[#E8E8E8] rounded-xl">
+          <div className="flex flex-col border border-[#E8E8E8] rounded-xl justify-center items-center p-5 w-full">
             <span className="text-[#0A4874] font-roboto font-medium text-lg sm:text-xl md:text-2xl mb-3 sm:mb-4">
               {product.title}
             </span>
-            <div className="mb-3 sm:mb-4 md:mb-6">
+            <div className="flex justify-center items-center mb-3 sm:mb-4 md:mb-6">
               {product.featuredImage && (
                 <Image
                   data={product.featuredImage}
