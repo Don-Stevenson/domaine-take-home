@@ -55,7 +55,7 @@ export function ProductCard({product}) {
   };
 
   return (
-    <div className="flex flex-col gap-[0.938rem]">
+    <div className="flex flex-col gap-3.5 w-full max-w-[200px] sm:max-w-xs">
       <div className="relative">
         <HoverImage
           isHovered={isHovered}
