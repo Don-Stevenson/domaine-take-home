@@ -11,14 +11,19 @@ export function CustomColorSwatch({
           selectedColor === color.name ||
           (!selectedColor &&
             currentColorVariant?.selectedOptions[0]?.value === color.name);
-
+        const isOutOfStock = !color.firstSelectableVariant?.availableForSale;
         return (
           <button
             key={color.name}
             onClick={() => setSelectedColor(color.name)}
             className={`relative w-[1.25rem] h-[1.25rem] rounded-full ${
               isSelected ? 'ring-1 ring-[#0A4874] ring-offset-1' : ''
+            } ${
+              isOutOfStock
+                ? 'before:absolute before:content-[""] before:w-[1.5rem] before:h-[5px] before:bg-red-900 before:rotate-45 before:top-1/2 before:left-1/2 before:-translate-x-1/2 before:-translate-y-1/2'
+                : ''
             }`}
+            disabled={isOutOfStock}
             style={{
               backgroundColor: getColorCode(color.name),
               backgroundImage: color.swatch?.image
