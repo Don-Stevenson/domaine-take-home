@@ -21,7 +21,14 @@ describe('CustomColorSwatch', () => {
     {
       name: 'Orange',
       swatch: {
-        image: null,
+        image: {
+          previewImage: {
+            url: 'orange-swatch.jpg',
+          },
+        },
+      },
+      firstSelectableVariant: {
+        availableForSale: true,
       },
     },
   ];

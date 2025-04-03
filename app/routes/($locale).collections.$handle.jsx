@@ -86,10 +86,6 @@ export default function Collection() {
     <div className="collection">
       <h1>{collection.title}</h1>
       <p className="collection-description">{collection.description}</p>
-      {/* Leave for debugging */}
-      {/* <pre style={{fontSize: '12px'}}>
-        {JSON.stringify(collection.products, null, 2)}
-      </pre>  */}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {collection.products.nodes.length > 0 ? (
